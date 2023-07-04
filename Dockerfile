@@ -1,6 +1,8 @@
-FROM maven:4.0.0-jdk-8-slim AS MAVEN_TOOL_CHAIN
-COPY pom.xml /tmp/
-COPY src /tmp/src/WORKDIR /tmp/
-RUN mvn package FROM openjdk:8-jdk-alpine
-COPY --from=MAVEN_TOOL_CHAIN  /tmp/target/*.jar app.jar
-ENTRYPOINT ["java","-jar","/app.jar"]
+FROM amazoncorretto:20
+
+WORKDIR /app
+COPY target/stunning-happiness-0.0.1-SNAPSHOT.jar stunning-happiness-0.0.1-SNAPSHOT.jar
+
+EXPOSE 8080
+
+CMD ["java", "-jar", "stunning-happiness-0.0.1-SNAPSHOT.jar"]
